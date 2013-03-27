@@ -2,6 +2,8 @@ package mr1.main;
 
 import java.util.List;
 
+import mr1.listeners.sensors.CustomSensorEventListener;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -138,64 +140,75 @@ public class ActvMain extends Activity {
 	}
 
     private final SensorEventListener sensorEventListener =
-            new SensorEventListener() {
-                // ���[�p�X�t�B���^�p�ϐ�
-                private float lowX;
-                private float lowY;
-                private float lowZ;
-
-                // ���[�p�X�t�B���^�Ώ۔͈�
-                private static final float FILTERING_VALUE = 0.2f;
-
-                // onAccuracyChanged���\�b�h(���x�ύX���C�x���g)
-//                @Override
-                public void onAccuracyChanged(Sensor sensor, int accuracy) {
-                    // �����Ȃ�
-                }
-
-                // onSensorChanged���\�b�h(�Z���T�[���ύX���C�x���g)
-//                @Override
-                public void onSensorChanged(SensorEvent event) {
-                    // �Z���T�[�����m�����l���擾
-                    float x = event.values[SensorManager.DATA_X];
-                    float y = event.values[SensorManager.DATA_Y];
-                    float z = event.values[SensorManager.DATA_Z];
-
-                    // ���[�p�X�t�B���^����(����g�U��(��̐k��������ȐU���̉e��)������)
-                    lowX = getLowPassFilterValue(x, lowX);
-                    lowY = getLowPassFilterValue(y, lowY);
-                    lowZ = getLowPassFilterValue(z, lowZ);
-
-                    // Log
-					Log.d("ActvMain.java"
-							+ "["
-							+ Thread.currentThread().getStackTrace()[2]
-									.getLineNumber()
-							+ ":"
-							+ Thread.currentThread().getStackTrace()[2]
-									.getMethodName() + "]", "lowX=" + lowX);
-                    
-                    switch (event.sensor.getType()) {
-
-                    // ���m���ꂽ�Z���T�[��񂪉����x�Z���T�[�̏ꍇ
-                    case Sensor.TYPE_ACCELEROMETER:
-//                        drawableView.effectAccelaration(lowX, lowY, lowZ);
+    					new CustomSensorEventListener(this);
+//            new SensorEventListener() {
+//                // ���[�p�X�t�B���^�p�ϐ�
+//                private float lowX;
+//                private float lowY;
+//                private float lowZ;
 //
-//                        // ��ʂ��ĕ`��
-//                        drawableView.invalidate();
-                        break;
+//                // ���[�p�X�t�B���^�Ώ۔͈�
+//                private static final float FILTERING_VALUE = 0.2f;
+//
+//                // onAccuracyChanged���\�b�h(���x�ύX���C�x���g)
+////                @Override
+//                public void onAccuracyChanged(Sensor sensor, int accuracy) {
+//                    // �����Ȃ�
+//                }
+//
+//                // onSensorChanged���\�b�h(�Z���T�[���ύX���C�x���g)
+////                @Override
+//                public void onSensorChanged(SensorEvent event) {
+//                    // �Z���T�[�����m�����l���擾
+//                    float x = event.values[SensorManager.DATA_X];
+//                    float y = event.values[SensorManager.DATA_Y];
+//                    float z = event.values[SensorManager.DATA_Z];
+//
+//                    // ���[�p�X�t�B���^����(����g�U��(��̐k��������ȐU���̉e��)������)
+//                    lowX = getLowPassFilterValue(x, lowX);
+//                    lowY = getLowPassFilterValue(y, lowY);
+//                    lowZ = getLowPassFilterValue(z, lowZ);
+//
+////                    // Log
+////					Log.d("ActvMain.java"
+////							+ "["
+////							+ Thread.currentThread().getStackTrace()[2]
+////									.getLineNumber()
+////							+ ":"
+////							+ Thread.currentThread().getStackTrace()[2]
+////									.getMethodName() + "]", "lowX=" + lowX);
+////                    
+//                    switch (event.sensor.getType()) {
+//
+//                    // ���m���ꂽ�Z���T�[��񂪉����x�Z���T�[�̏ꍇ
+//                    case Sensor.TYPE_ACCELEROMETER:
+////                        drawableView.effectAccelaration(lowX, lowY, lowZ);
+////
+////                        // ��ʂ��ĕ`��
+////                        drawableView.invalidate();
+//                    	
+//                    	showData(lowX, lowY, lowZ);
+//                    	
+//                        break;
+//
+//                    // �����x�Z���T�[�ȊO�͖���
+//                    default:
+//                        break;
+//                    }
+//                }
+//
+//                private void showData(float lowX, float lowY, float lowZ) {
+//					// TODO Auto-generated method stub
+//                	
+//                	
+//					
+//				}
+//
+//				// ���[�p�X�t�B���^����(����g�U��(��̐k��������ȐU���̉e��)������)
+//                private float getLowPassFilterValue(float eventValue, float lowValue) {
+//                    return eventValue * FILTERING_VALUE + lowValue
+//                        * (1.0f - FILTERING_VALUE);
+//                }
+//            };
 
-                    // �����x�Z���T�[�ȊO�͖���
-                    default:
-                        break;
-                    }
-                }
-
-                // ���[�p�X�t�B���^����(����g�U��(��̐k��������ȐU���̉e��)������)
-                private float getLowPassFilterValue(float eventValue, float lowValue) {
-                    return eventValue * FILTERING_VALUE + lowValue
-                        * (1.0f - FILTERING_VALUE);
-                }
-            };
-
-}
+}//public class ActvMain extends Activity
